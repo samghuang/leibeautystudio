@@ -1,0 +1,84 @@
+---
+/**
+ * The document shell every page renders into: metadata, fonts, header,
+ * footer and the shared stylesheet.
+ *
+ * Each page supplies its own `title` and `description`. Those are the two
+ * fields a search result is built from, so they are required rather than
+ * defaulted — a page that forgets them fails the build.
+ */
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StructuredData from '../components/StructuredData.astro';
+import { site } from '../data/site.js';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Overrides the default social share image. */
+  image?: string;
+}
+
+const { title, description, image = '/og-image.svg' } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
+const socialImage = new URL(image, Astro.site ?? site.url);
+const pageTitle = `${title} | ${site.name}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta name="theme-color" content="#f2ebdf" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {/* The two latin faces are needed for first paint; the rest load on demand. */}
+    <link
+      rel="preload"
+      href="/fonts/cormorant-garamond-normal-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-normal-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    {/* Open Graph / Twitter — how the site looks when a link is shared. */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <StructuredData />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" class="page-fade">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

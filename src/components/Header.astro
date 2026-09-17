@@ -1,0 +1,93 @@
+---
+/**
+ * Sticky site header.
+ *
+ * The active link is marked with `aria-current="page"` — that single attribute
+ * drives both the screen-reader announcement and the CSS underline, so there
+ * is no separate "active" class to keep in sync.
+ */
+import { navLinks, isCurrent } from '../data/nav.js';
+import { site, bookingHref } from '../data/site.js';
+
+const pathname = Astro.url.pathname;
+---
+
+<div class="nav-wrap">
+  <div class="container">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/">{site.shortName}</a>
+
+      <div class="nav-links">
+        {
+          navLinks.map((link) => (
+            <a
+              class="nav-link"
+              href={link.href}
+              aria-current={isCurrent(link.href, pathname) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <a class="btn btn-primary" style="margin-left: 8px" href={bookingHref}>
+          Book an appointment
+        </a>
+      </div>
+
+      <button
+        class="nav-burger"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-sheet"
+        data-nav-toggle
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-sheet" id="nav-sheet" data-nav-sheet inert>
+        <div class="nav-sheet-inner">
+          <div class="nav-sheet-links">
+            {
+              navLinks.map((link) => (
+                <a
+                  class="nav-sheet-link"
+                  href={link.href}
+                  aria-current={isCurrent(link.href, pathname) ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              ))
+            }
+          </div>
+          <a class="btn btn-primary nav-sheet-cta" href={bookingHref}>
+            Book an appointment
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<noscript>
+  {/* The mobile sheet needs JS, so without it fall back to the plain link row. */}
+  <style>
+    @media (max-width: 720px) {
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        justify-content: flex-end;
+      }
+
+      .nav-burger {
+        display: none !important;
+      }
+    }
+  </style>
+</noscript>
+
+<script>
+  import { initNav } from '../scripts/nav.js';
+  initNav();
+</script>

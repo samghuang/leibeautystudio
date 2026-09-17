@@ -1,0 +1,33 @@
+<!--
+  Social share card (1200×630).
+
+  An SVG placeholder so links preview with the studio's branding rather than a
+  blank card. Replace with a 1200×630 JPG or PNG of real studio photography
+  when it exists, and update the `image` default in src/layouts/BaseLayout.astro
+  to match — some social platforms do not render SVG previews.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="glow" cx="10%" cy="100%" r="80%">
+      <stop offset="0%" stop-color="#bd8969" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#bd8969" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f2ebdf"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#2b1f18">
+    <text x="90" y="250" font-size="86" font-weight="500">Lei Beauty Studio</text>
+    <text x="90" y="340" font-size="46" font-style="italic" fill="#bd8969">
+      Enhancing your natural beauty
+    </text>
+  </g>
+
+  <g font-family="Inter, system-ui, sans-serif" fill="#8a7361" font-size="26" letter-spacing="3">
+    <text x="90" y="440">HAIR · FACIALS · LASHES · MAKEUP</text>
+    <text x="90" y="490">FREMONT, CALIFORNIA · EST. 2005</text>
+  </g>
+
+  <rect x="90" y="530" width="120" height="3" fill="#bd8969"/>
+</svg>

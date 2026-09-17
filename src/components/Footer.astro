@@ -1,0 +1,76 @@
+---
+/**
+ * Site footer. Address, phone and hours are read from src/data/site.js so
+ * they match the structured data exactly — search engines penalise a business
+ * whose contact details disagree with themselves across a page.
+ */
+import { navLinks } from '../data/nav.js';
+import { site, formattedAddress } from '../data/site.js';
+
+const mapsHref = `https://maps.google.com/?q=${encodeURIComponent(
+  `${site.name}, ${formattedAddress}`,
+)}`;
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">{site.initials}</div>
+
+        <div class="footer-block">
+          <h2 class="footer-h">Address</h2>
+          <address class="footer-text" style="font-style: normal">
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer">
+              {site.address.street}<br />
+              {site.address.locality}, {site.address.region} {site.address.postalCode}
+            </a><br />
+            <span class="footer-note">{site.address.note}</span>
+          </address>
+        </div>
+
+        <div class="footer-block">
+          <h2 class="footer-h">Contact</h2>
+          <p class="footer-text">
+            <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="footer-h">Menu</h2>
+        <ul class="footer-list">
+          {navLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="footer-h">Hours</h2>
+        <ul class="footer-list">
+          {site.hours.map((block) => <li>{block.label} · {block.hours}</li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="footer-h">Follow</h2>
+        <ul class="footer-list">
+          {
+            site.social.map((channel) => (
+              <li>
+                <a href={channel.url} target="_blank" rel="noopener noreferrer">
+                  {channel.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-base">
+      <span>© {year} {site.name}. All rights reserved.</span>
+      <span>Designed with care in the Bay.</span>
+    </div>
+  </div>
+</footer>

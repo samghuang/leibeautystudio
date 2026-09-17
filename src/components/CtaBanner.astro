@@ -1,0 +1,33 @@
+---
+/**
+ * Closing call-to-action, shared by all three pages.
+ *
+ * `watermark` is the oversized word behind the copy; `title` may contain
+ * markup (the home page puts the phone number in a tel: link).
+ */
+import { bookingHref } from '../data/site.js';
+
+interface Props {
+  watermark: string;
+  title: string;
+  action?: string;
+  href?: string;
+  style?: string;
+}
+
+const {
+  watermark,
+  title,
+  action = 'Book an appointment',
+  href = bookingHref,
+  style,
+} = Astro.props;
+---
+
+<section class="cta-banner" style={style}>
+  <div class="cta-watermark" aria-hidden="true">{watermark}</div>
+  <div class="cta-content">
+    <h2 class="cta-title" set:html={title} />
+    <a class="btn btn-primary" href={href}>{action}</a>
+  </div>
+</section>

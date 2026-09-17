@@ -1,0 +1,21 @@
+---
+/**
+ * Placeholder for photography that has not been shot yet.
+ *
+ * Each instance names the picture it is standing in for, so the shot list is
+ * readable straight off the page. When real images arrive, swap the inner
+ * markup for Astro's `<Image />` — the wrapper classes already reserve the
+ * correct aspect ratio, so no layout shift is introduced.
+ */
+
+interface Props {
+  /** Describes the intended photograph, e.g. "hero · facial in progress". */
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="photo" role="img" aria-label={`Placeholder for photograph: ${label}`}>
+  <span>{label}</span>
+</div>

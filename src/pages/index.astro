@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import { featuredServices } from '../data/services.js';
+import { testimonials } from '../data/testimonials.js';
+import { storyPreview } from '../data/about.js';
+import { site, bookingHref } from '../data/site.js';
+
+const description = `${site.description} Hair, facials, lashes and makeup by appointment — call ${site.phone}.`;
+---
+
+<BaseLayout title="Hair, Facials & Lashes in Fremont" description={description}>
+  <div class="container">
+    {/* ── Hero ────────────────────────────────────────────── */}
+    <section class="hero">
+      <div>
+        {/*
+          Each part is its own element. Two bare text nodes would merge into a
+          single anonymous flex item once the separator is hidden on mobile,
+          collapsing the gap between them.
+        */}
+        <p class="hero-eyebrow">
+          <span>{site.name}</span>
+          <span class="hero-eyebrow-sep" aria-hidden="true">·</span>
+          <span>Est. {site.founded}</span>
+        </p>
+        <h1 class="hero-title">
+          Quality treatment that <em>enhances</em> your natural beauty.
+        </h1>
+        <p class="hero-sub">
+          LEI Beauty Studio aims to provide quality treatments and help clients
+          enhance their natural beauty — without ever altering who they are.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href={bookingHref}>Book now</a>
+          <a class="btn btn-ghost" href="/services/">All services</a>
+        </div>
+      </div>
+      <div class="media-fill">
+        <Photo label="hero · facial treatment in progress" />
+      </div>
+    </section>
+
+    {/* ── Services ────────────────────────────────────────── */}
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">Our services</h2>
+        <a class="btn btn-ghost hide-mobile" href="/services/">All services</a>
+      </div>
+
+      <div class="svc-grid">
+        {
+          featuredServices.map((service) => (
+            <a class="svc-cell" href={service.href}>
+              <Icon name={service.icon} class="svc-cell-icon" />
+              <h3 class="svc-cell-name">{service.name}</h3>
+              <p class="svc-cell-tags">{service.teaser}</p>
+              <Icon name="arrow" class="svc-cell-arrow" />
+            </a>
+          ))
+        }
+      </div>
+
+      <a class="btn btn-ghost svc-grid-cta show-mobile" href="/services/">
+        All services →
+      </a>
+    </section>
+
+    {/* ── About preview ───────────────────────────────────── */}
+    <section class="section">
+      <div class="about-preview">
+        <p class="about-preview-eyebrow">Enhancing your natural beauty</p>
+        <div class="about-preview-copy">
+          <h2 class="about-preview-title">About {site.name}</h2>
+          {storyPreview.map((paragraph) => <p class="about-preview-body">{paragraph}</p>)}
+          <a class="btn btn-primary" href="/about/">About us</a>
+        </div>
+        <div class="about-preview-media media-fill">
+          <Photo label="founder · esther huang portrait" />
+        </div>
+      </div>
+    </section>
+
+    {/* ── Stats ───────────────────────────────────────────── */}
+    <ul class="stats">
+      {
+        site.stats.map((stat) => (
+          <li>
+            <p class="stat-num">
+              {stat.value}<span class="stat-suffix">{stat.suffix}</span>
+            </p>
+            <p class="stat-label">{stat.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* ── Testimonials ────────────────────────────────────── */}
+    <section class="section" style="padding-top: 24px">
+      <div class="section-head">
+        <h2 class="section-title" id="testimonials-heading">
+          Some kind words from clients
+        </h2>
+      </div>
+
+      {/*
+        The group label lives on the wrapper, not on the <ul> — a role on the
+        list element would strip its list semantics from the cards inside it.
+      */}
+      <div
+        class="t-carousel"
+        role="group"
+        aria-labelledby="testimonials-heading"
+        data-carousel
+        data-carousel-idle
+      >
+        <button
+          class="t-arrow t-arrow-left"
+          type="button"
+          data-carousel-step="-1"
+          aria-label="Previous testimonials"
+          aria-controls="testimonials-track"
+        >
+          <Icon name="arrow" style="width: 18px; height: 18px; transform: rotate(180deg)" />
+        </button>
+
+        <ul
+          class="t-viewport"
+          id="testimonials-track"
+          data-carousel-viewport
+          tabindex="0"
+        >
+          {
+            testimonials.map((testimonial) => (
+              <li class="tcard">
+                <span class="tcard-glyph" aria-hidden="true">“</span>
+                <figure style="margin: 0; display: flex; flex-direction: column; flex: 1">
+                  <blockquote class="tcard-quote" style="margin: 0 0 20px">
+                    {testimonial.quote}
+                  </blockquote>
+                  <figcaption class="tcard-foot">
+                    <span class="tcard-author">— {testimonial.author}</span>
+                    <span class="tcard-meta">
+                      <Icon name={testimonial.icon} />
+                      <span>{testimonial.service}</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              </li>
+            ))
+          }
+        </ul>
+
+        <button
+          class="t-arrow t-arrow-right"
+          type="button"
+          data-carousel-step="1"
+          aria-label="Next testimonials"
+          aria-controls="testimonials-track"
+        >
+          <Icon name="arrow" style="width: 18px; height: 18px" />
+        </button>
+
+        <div class="t-arrows-mobile">
+          <button
+            class="t-nav"
+            type="button"
+            data-carousel-step="-1"
+            aria-label="Previous testimonials"
+            aria-controls="testimonials-track"
+          >
+            <Icon name="arrow" style="width: 16px; height: 16px; transform: rotate(180deg)" />
+          </button>
+          <button
+            class="t-nav"
+            type="button"
+            data-carousel-step="1"
+            aria-label="Next testimonials"
+            aria-controls="testimonials-track"
+          >
+            <Icon name="arrow" style="width: 16px; height: 16px" />
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <CtaBanner
+    watermark={site.shortName}
+    title={`Call us for an appointment<br />at <a href="tel:${site.phoneHref}">${site.phone}</a>`}
+  />
+</BaseLayout>
+
+<script>
+  import { initCarousel } from '../scripts/carousel.js';
+  initCarousel();
+</script>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Icon from '../components/Icon.astro';
+import { categories } from '../data/services.js';
+import { bookingHref } from '../data/site.js';
+
+const description =
+  'Full service menu and starting prices for hair cuts, color, treatments, facials, skin and body work, makeup and lash extensions at Lei Beauty Studio in Fremont, CA.';
+---
+
+<BaseLayout title="Services & Pricing" description={description}>
+  <div class="container">
+    <header class="svc-hero">
+      <div class="svc-hero-title">
+        <p class="section-eyebrow">The full menu</p>
+        <h1>Services <em>&amp; pricing</em></h1>
+      </div>
+      <div class="svc-hero-meta">
+        <p>
+          Every treatment begins with a short consultation so we can tailor our
+          approach to your hair, skin, and goals. Pricing reflects starting
+          rates — final pricing is confirmed at consult.
+        </p>
+        <a class="btn btn-primary" href={bookingHref}>Book an appointment</a>
+      </div>
+    </header>
+
+    {
+      categories.map((category) => (
+        <section id={category.id} class="svc-cat" aria-labelledby={`${category.id}-title`}>
+          <div class="svc-cat-head">
+            <h2 class="svc-cat-title" id={`${category.id}-title`}>
+              {category.title}
+            </h2>
+            <p class="svc-cat-desc">{category.description}</p>
+          </div>
+
+          {category.items.map((item) => (
+            <article class="svc-row">
+              <div class="svc-row-icon-wrap">
+                <Icon name={item.icon} class="svc-row-icon" />
+              </div>
+
+              <div class="svc-row-body">
+                <h3 class="svc-row-title">{item.name}</h3>
+                <p class="svc-row-desc">{item.description}</p>
+              </div>
+
+              {/*
+                A definition list, not a table: each option is a term and its
+                price is the description, which is what a screen reader needs
+                to read the pair together.
+              */}
+              <div class="svc-row-options">
+                <p class="svc-row-options-eyebrow" id={`${item.id}-pricing`}>Pricing</p>
+                <dl aria-labelledby={`${item.id}-pricing`}>
+                {item.options.map((option) => (
+                  <div class="svc-row-option">
+                    {/*
+                      A <dl> may only contain dt/dd (optionally wrapped in a
+                      div), so the dotted leader is drawn as a pseudo-element
+                      on the term rather than as a third element between them.
+                    */}
+                    <dt class="svc-row-option-name">
+                      <span>{option.name}</span>
+                    </dt>
+                    <dd class="svc-row-option-price">{option.price}</dd>
+                  </div>
+                ))}
+                </dl>
+              </div>
+
+              <div class="svc-row-cta">
+                <a class="btn-book" href={bookingHref}>
+                  Book<span class="visually-hidden"> {item.name}</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </section>
+      ))
+    }
+  </div>
+
+  <CtaBanner
+    watermark="menu"
+    title="Not sure what you need?<br />We'll help you choose."
+    action="Book a free consultation"
+    href={bookingHref}
+    style="margin-top: 80px"
+  />
+</BaseLayout>

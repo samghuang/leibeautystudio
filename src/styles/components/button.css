@@ -1,0 +1,80 @@
+/* Buttons and button-shaped links. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease);
+}
+
+.btn-primary {
+  background: var(--terracotta);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--terracotta-deep);
+}
+
+.btn-ghost {
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* Compact accent button used on each service row. */
+.btn-book {
+  display: inline-flex;
+  align-items: center;
+  background: var(--terracotta);
+  color: #fff;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background var(--dur-hover) var(--ease);
+}
+
+.btn-book:hover {
+  background: var(--terracotta-deep);
+}
+
+/*
+ * Touch devices never fire :hover (or fire it and leave it stuck), so mirror
+ * every hover state as an :active press.
+ */
+@media (hover: none) {
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary:active {
+    background: var(--terracotta-deep);
+  }
+
+  .btn-ghost:active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn-book:active {
+    background: var(--terracotta-deep);
+  }
+}

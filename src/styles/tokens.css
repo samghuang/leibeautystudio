@@ -1,0 +1,64 @@
+/*
+ * Design tokens.
+ *
+ * Every colour, font stack, easing curve and duration used anywhere in the
+ * site is declared here. Components reference the token, never the literal —
+ * so a rebrand is an edit to this file.
+ */
+
+:root {
+  /* ── Surfaces ─────────────────────────────────────────────── */
+  --bg: #f2ebdf;
+  --bg-deep: #e5d9c3;
+  --panel: #f8f1e5;
+  --card: #f8f1e5;
+  --line: #d8cbb3;
+  --line-soft: #e0d3bb;
+
+  /* ── Ink ──────────────────────────────────────────────────── */
+  --ink: #2b1f18;
+  --ink-strong: #1a120d;
+  --ink-soft: #4a3a2e;
+  --muted: #8a7361;
+
+  /* ── Accent ───────────────────────────────────────────────── */
+  --terracotta: #bd8969;
+  --terracotta-deep: #9e6e51;
+  --terracotta-soft: #d3a585;
+  /* Pre-mixed accent washes, so components don't hard-code rgba() literals. */
+  --accent-wash: color-mix(in oklab, var(--terracotta) 6%, transparent);
+  --accent-wash-strong: color-mix(in oklab, var(--terracotta) 12%, transparent);
+
+  /* ── Type ─────────────────────────────────────────────────── */
+  --display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* ── Layout ───────────────────────────────────────────────── */
+  --container-max: 1180px;
+  --gutter: 32px;
+  --gutter-mobile: 22px;
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  /*
+   * Shared four-column grid used by the services page (marker, title, detail,
+   * action). Declared once so the hero, the category headers and the service
+   * rows can never fall out of alignment with each other.
+   */
+  --services-grid: 64px 1.4fr 1fr 110px;
+
+  /* ── Motion ───────────────────────────────────────────────── */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1); /* hover / feedback default */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* entrances */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* on-screen A→B moves */
+  --ease-in: cubic-bezier(0.32, 0, 0.67, 0); /* exits only */
+  --dur-hover: 150ms;
+  --dur-enter: 300ms;
+  --dur-exit: 240ms;
+
+  /* ── Depth ────────────────────────────────────────────────── */
+  --z-nav: 50;
+  --z-sheet: 49;
+  --shadow-float: 0 6px 20px -8px rgb(0 0 0 / 35%);
+}
