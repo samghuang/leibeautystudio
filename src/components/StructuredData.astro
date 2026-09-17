@@ -1,0 +1,74 @@
+---
+/**
+ * schema.org `BeautySalon` markup.
+ *
+ * This is what lets Google show the studio's hours, phone number, address and
+ * price range directly in local results and the map pack. It is generated
+ * from src/data/site.js and src/data/services.js, so it can never contradict
+ * what the page itself says.
+ */
+import { site } from '../data/site.js';
+import { categories } from '../data/services.js';
+
+const openingHours = site.hours
+  .filter((block) => block.opens && block.closes)
+  .map((block) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: block.days,
+    opens: block.opens,
+    closes: block.closes,
+  }));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BeautySalon',
+  '@id': `${site.url}/#studio`,
+  name: site.name,
+  legalName: site.legalName,
+  description: site.description,
+  url: site.url,
+  telephone: site.phoneHref,
+  email: site.email,
+  foundingDate: site.founded,
+  priceRange: '$$',
+  currenciesAccepted: 'USD',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  openingHoursSpecification: openingHours,
+  sameAs: site.social.map((channel) => channel.url),
+  founder: {
+    '@type': 'Person',
+    name: 'Esther Huang',
+    jobTitle: 'Founder & lead esthetician',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Services',
+    itemListElement: categories.map((category) => ({
+      '@type': 'OfferCatalog',
+      name: category.title,
+      itemListElement: category.items.map((item) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: item.name,
+          description: item.description,
+        },
+      })),
+    })),
+  },
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

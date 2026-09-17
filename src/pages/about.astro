@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Photo from '../components/Photo.astro';
+import { story, values, founder, timeline } from '../data/about.js';
+import { bookingHref } from '../data/site.js';
+
+const description =
+  'Lei Beauty Studio is a one-chair, family-run studio in Fremont, CA. Founder Esther Huang has practised for twenty years and still treats every client personally.';
+---
+
+<BaseLayout title="About the Studio" description={description}>
+  <div class="container">
+    {/* ── Hero ────────────────────────────────────────────── */}
+    <section class="about-hero">
+      <div>
+        <p class="section-eyebrow section-eyebrow--lg">About the studio</p>
+        <h1>Twenty years of <em>quiet</em> craft.</h1>
+        <p class="about-hero-lede">
+          LEI Beauty Studio is a small, family-run beauty studio in Fremont
+          built on patient, personalized work. We are licensed, professionally
+          trained, and proudly old-fashioned about how long we spend with every
+          client.
+        </p>
+        <div class="about-hero-actions">
+          <a class="btn btn-primary" href={bookingHref}>Book an appointment</a>
+          <a class="btn btn-ghost" href="/services/">See services</a>
+        </div>
+      </div>
+      <div class="media-portrait">
+        <Photo label="studio · interior, treatment room" />
+      </div>
+    </section>
+
+    {/* ── Story ───────────────────────────────────────────── */}
+    <section class="about-story" aria-labelledby="story-heading">
+      <h2 class="about-story-h" id="story-heading">Our story</h2>
+      <div>
+        <blockquote class="about-story-quote">{story.pullQuote}</blockquote>
+        {story.paragraphs.map((paragraph) => <p class="about-story-body" set:html={paragraph} />)}
+      </div>
+    </section>
+
+    {/* ── Values ──────────────────────────────────────────── */}
+    <section class="section" style="padding-top: 0; border-top: 1px solid var(--line)">
+      <div class="section-head" style="margin-top: 64px">
+        <h2 class="section-title">What we believe</h2>
+      </div>
+      <ul class="values">
+        {
+          values.map((value) => (
+            <li class="value">
+              <p class="value-num">{value.number}</p>
+              <h3 class="value-h">{value.heading}</h3>
+              <p class="value-b">{value.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {/* ── Founder ─────────────────────────────────────────── */}
+    <section class="founder" aria-labelledby="founder-heading">
+      <div class="founder-media media-portrait">
+        <Photo label="esther · founder portrait" />
+      </div>
+      <div class="founder-body">
+        <p class="section-eyebrow section-eyebrow--lg">Behind the chair</p>
+        <h2 class="founder-h" id="founder-heading">Meet <em>Esther</em>.</h2>
+        <p class="founder-lede">{founder.lede}</p>
+
+        <dl class="founder-creds">
+          {
+            founder.credentials.map((credential) => (
+              <>
+                <dt>{credential.term}</dt>
+                <dd>{credential.detail}</dd>
+              </>
+            ))
+          }
+        </dl>
+
+        <a class="btn btn-primary" style="margin-top: 28px" href={bookingHref}>
+          Book with Esther
+        </a>
+      </div>
+    </section>
+
+    {/* ── Timeline ────────────────────────────────────────── */}
+    <section class="timeline" aria-labelledby="timeline-heading">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">The story so far</p>
+          <h2 class="section-title" id="timeline-heading">The studio, year by year</h2>
+        </div>
+      </div>
+      <ol class="timeline-track">
+        {
+          timeline.map((entry) => (
+            <li class="tl-item">
+              <p class="tl-year">{entry.year}</p>
+              <h3 class="tl-title">{entry.title}</h3>
+              <p class="tl-body">{entry.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
+
+  <CtaBanner
+    watermark="welcome"
+    title="Come meet us in person.<br />The kettle is always on."
+    style="margin-top: 40px"
+  />
+</BaseLayout>

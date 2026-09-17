@@ -1,0 +1,265 @@
+/*
+ * Testimonials carousel.
+ *
+ * Layout is CSS scroll-snap, so the track is scrollable, swipeable and
+ * keyboard-navigable with no JavaScript at all. The script in
+ * src/scripts/carousel.js only wires the two arrow buttons to
+ * `scrollBy` and disables them at the ends — if it never runs, the carousel
+ * still works by touch, trackpad and arrow keys.
+ */
+
+.t-carousel {
+  position: relative;
+  margin-top: 28px;
+}
+
+/*
+ * Until src/scripts/carousel.js wires the arrows, they cannot do anything, so
+ * they are not shown. Scroll-snap keeps the cards swipeable either way.
+ */
+.t-carousel[data-carousel-idle] .t-arrow,
+.t-carousel[data-carousel-idle] .t-arrows-mobile {
+  display: none;
+}
+
+.t-viewport {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* Room for the focus ring, offset back so cards stay flush with the grid. */
+  padding: 4px;
+  margin: -4px;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.t-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.tcard {
+  flex: 0 0 calc((100% - 40px) / 3);
+  scroll-snap-align: start;
+  background: color-mix(in oklab, var(--panel) 70%, var(--terracotta) 8%);
+  border-radius: var(--radius);
+  padding: 76px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Oversized italic quote glyph — a feature treatment on every card. */
+.tcard-glyph {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 22px;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 140px;
+  line-height: 0.8;
+  color: var(--terracotta);
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+}
+
+.tcard-quote {
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--ink-strong);
+  letter-spacing: -0.005em;
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+.tcard-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.tcard-author {
+  font-size: 14px;
+  color: var(--terracotta);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  white-space: nowrap;
+  font-style: normal;
+}
+
+.tcard-meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+
+.tcard-meta svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: var(--terracotta);
+  opacity: 0.85;
+}
+
+/* ── Arrows ─────────────────────────────────────────────────── */
+
+/* Flanking arrows, revealed when the row is hovered or focused. */
+.t-arrow {
+  position: absolute;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 84%, transparent);
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  opacity: 0;
+  box-shadow: var(--shadow-float);
+  transition:
+    opacity var(--dur-hover) var(--ease),
+    background var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease),
+    transform var(--dur-hover) var(--ease-out);
+}
+
+.t-arrow-left {
+  left: -24px;
+  transform: translate(-6px, -50%);
+}
+
+.t-arrow-right {
+  right: -24px;
+  transform: translate(6px, -50%);
+}
+
+.t-carousel:hover .t-arrow,
+.t-carousel:focus-within .t-arrow {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.t-arrow:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.t-arrow:active {
+  transform: translate(0, -50%) scale(0.92);
+}
+
+.t-arrow[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mobile arrow row beneath the cards. */
+.t-arrows-mobile {
+  display: none;
+}
+
+.t-nav {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease),
+    opacity var(--dur-hover) var(--ease);
+}
+
+.t-nav:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.t-nav[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .t-arrow:active,
+  .t-nav:active:not([disabled]) {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+}
+
+@media (max-width: 900px) {
+  .tcard {
+    flex-basis: calc((100% - 20px) / 2);
+  }
+
+  .tcard-glyph {
+    font-size: 120px;
+  }
+}
+
+@media (max-width: 720px) {
+  .t-carousel {
+    margin-top: 16px;
+  }
+
+  .t-viewport {
+    gap: 14px;
+    /* Bleed to the screen edge so a swiped card reaches the gutter. */
+    margin: -4px calc(-1 * var(--gutter-mobile));
+    padding: 4px var(--gutter-mobile);
+  }
+
+  .tcard {
+    flex-basis: calc(100% - var(--gutter-mobile) - 8px);
+    padding: 70px 22px 22px;
+  }
+
+  .tcard-quote {
+    font-size: 18px;
+  }
+
+  .t-arrow {
+    display: none;
+  }
+
+  .t-arrows-mobile {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .t-arrows-mobile .t-nav {
+    width: 44px;
+    height: 44px;
+  }
+}

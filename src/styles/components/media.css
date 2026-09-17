@@ -1,0 +1,58 @@
+/*
+ * Image slots.
+ *
+ * The site currently has no photography, so every image well renders a
+ * labelled placeholder. Replacing `<Photo>` with Astro's `<Image>` is the only
+ * change needed once real assets exist — the surrounding layout already
+ * reserves the right aspect ratio, so dropping photos in will not shift the
+ * page.
+ */
+
+.photo {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 16px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgb(184 92 61 / 8%) 0,
+      rgb(184 92 61 / 8%) 1px,
+      transparent 1px,
+      transparent 14px
+    ),
+    linear-gradient(160deg, #e8c8a8, #d9a98a 50%, #bc8868);
+  color: rgb(43 31 24 / 55%);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Fills its grid cell edge to edge. */
+.media-fill {
+  align-self: stretch;
+  min-height: 100%;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+/* Fixed-ratio portrait well. */
+.media-portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+@media (max-width: 720px) {
+  .media-fill {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+  }
+}
