@@ -159,6 +159,36 @@
   transition: transform 320ms var(--ease-out);
 }
 
+.nav-sheet-close {
+  position: absolute;
+  top: 14px;
+  right: var(--gutter-mobile);
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklab, var(--panel) 78%, transparent);
+}
+
+.nav-sheet-close span {
+  position: absolute;
+  width: 16px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--ink);
+}
+
+.nav-sheet-close span:first-child {
+  transform: rotate(45deg);
+}
+
+.nav-sheet-close span:last-child {
+  transform: rotate(-45deg);
+}
+
 .nav-sheet.is-open .nav-sheet-inner {
   transform: translateY(0);
 }
@@ -189,7 +219,9 @@
 }
 
 .nav-sheet-cta {
-  align-self: flex-start;
+  align-self: stretch;
+  width: 100%;
+  min-height: 48px;
   margin-top: 8px;
   padding: 13px 28px;
 }

@@ -47,6 +47,10 @@ const pathname = Astro.url.pathname;
 
       <div class="nav-sheet" id="nav-sheet" data-nav-sheet inert>
         <div class="nav-sheet-inner">
+          <button class="nav-sheet-close" type="button" aria-label="Close menu" data-nav-close>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
           <div class="nav-sheet-links">
             {
               navLinks.map((link) => (

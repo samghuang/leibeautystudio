@@ -26,6 +26,18 @@ const description =
       </div>
     </header>
 
+    <nav class="svc-quick-nav" aria-label="Service categories" data-service-quick-nav>
+      <div class="svc-quick-nav-track">
+        {
+          categories.map((category) => (
+            <a href={`#${category.id}`} data-service-quick-link={category.id}>
+              {category.title}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
     {
       categories.map((category) => (
         <section id={category.id} class="svc-cat" aria-labelledby={`${category.id}-title`}>
@@ -71,11 +83,6 @@ const description =
                 </dl>
               </div>
 
-              <div class="svc-row-cta">
-                <a class="btn-book" href={bookingHref}>
-                  Book<span class="visually-hidden"> {item.name}</span>
-                </a>
-              </div>
             </article>
           ))}
         </section>
@@ -91,3 +98,8 @@ const description =
     style="margin-top: 80px"
   />
 </BaseLayout>
+
+<script>
+  import { initServiceQuickNav } from '../scripts/services-nav.js';
+  initServiceQuickNav();
+</script>

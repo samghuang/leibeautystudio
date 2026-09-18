@@ -10,6 +10,7 @@ export function initNav() {
   const nav = document.querySelector('.nav');
   const toggle = document.querySelector('[data-nav-toggle]');
   const sheet = document.querySelector('[data-nav-sheet]');
+  const close = document.querySelector('[data-nav-close]');
   if (!nav || !toggle || !sheet) return;
 
   // ── Scrolled state ──────────────────────────────────────────
@@ -34,6 +35,10 @@ export function initNav() {
   };
 
   toggle.addEventListener('click', () => setOpen(!open));
+  close?.addEventListener('click', () => {
+    setOpen(false);
+    toggle.focus();
+  });
 
   // Tapping the scrim closes; taps inside the panel do not bubble to it.
   sheet.addEventListener('click', (event) => {

@@ -233,9 +233,9 @@
 
   .t-viewport {
     gap: 14px;
-    /* Bleed to the screen edge so a swiped card reaches the gutter. */
-    margin: -4px calc(-1 * var(--gutter-mobile));
-    padding: 4px var(--gutter-mobile);
+    margin: -4px 0;
+    padding: 4px;
+    scroll-padding-inline: 4px;
   }
 
   .tcard {

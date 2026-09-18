@@ -309,12 +309,34 @@
   }
 
   .hero-actions {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
   .hero-actions .btn {
     width: 100%;
+    min-height: 44px;
+    padding-inline: 12px;
+  }
+
+  .hero-actions .btn-ghost {
+    order: 1;
+  }
+
+  .hero-actions .btn-primary {
+    order: 2;
+  }
+
+  .services-section-head {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .services-section-head .btn {
+    min-height: 44px;
+    padding-inline: 18px;
   }
 
   /* Compact horizontal rows on mobile. */
@@ -330,7 +352,7 @@
     align-items: center;
     padding: 16px 18px;
     border-right: none;
-    border-bottom: 1px solid var(--line-soft);
+    border-bottom: none;
   }
 
   .svc-cell:last-child {
@@ -364,11 +386,6 @@
     opacity: 0.5;
   }
 
-  .svc-grid-cta {
-    width: 100%;
-    margin-top: 20px;
-  }
-
   .about-preview {
     padding: 28px 24px;
     grid-template-areas:
@@ -394,31 +411,38 @@
     margin-top: 16px;
   }
 
-  /* Stacked, centred, divided by hairlines. */
+  /* iOS-style inset grouped metrics: compact, glanceable and thumb-width. */
   .stats {
-    padding: 8px 0;
-    grid-template-columns: 1fr;
+    padding: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
     text-align: center;
+    background: color-mix(in oklab, var(--panel) 82%, var(--terracotta) 3%);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
   }
 
   .stats > li {
     position: relative;
-    padding: 24px 8px;
+    min-width: 0;
+    padding: 18px 8px 16px;
   }
 
   .stats > li + li::before {
     content: '';
     position: absolute;
     left: 0;
-    right: 0;
-    top: 0;
-    height: 1px;
+    top: 14px;
+    bottom: 14px;
+    width: 1px;
     background: var(--line);
   }
 
   .stat-num {
-    font-size: 34px;
+    font-family: var(--sans);
+    font-size: clamp(22px, 7vw, 28px);
+    font-weight: 500;
+    letter-spacing: -0.04em;
   }
 
   .stat-suffix {
@@ -426,8 +450,9 @@
   }
 
   .stat-label {
-    font-size: 9.5px;
-    letter-spacing: 0.14em;
-    line-height: 1.35;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    margin-top: 8px;
   }
 }

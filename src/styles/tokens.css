@@ -42,11 +42,11 @@
   --radius-sm: 10px;
 
   /*
-   * Shared four-column grid used by the services page (marker, title, detail,
-   * action). Declared once so the hero, the category headers and the service
+   * Shared three-column grid used by the services page (marker, title, detail).
+   * Declared once so the hero, the category headers and the service
    * rows can never fall out of alignment with each other.
    */
-  --services-grid: 64px 1.4fr 1fr 110px;
+  --services-grid: 64px 1.4fr 1fr;
 
   /* ── Motion ───────────────────────────────────────────────── */
   --ease: cubic-bezier(0.16, 1, 0.3, 1); /* hover / feedback default */
