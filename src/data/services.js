@@ -24,9 +24,9 @@ export const categories = [
         description:
           'Personalized cut and shaping consultation tailored to face shape, hair type, and lifestyle.',
         options: [
-          { name: 'Women', price: 'From $65' },
-          { name: 'Men', price: 'From $45' },
-          { name: 'Children', price: 'From $35' },
+          { name: 'Women', price: 'From $45' },
+          { name: 'Men', price: 'From $25' },
+          { name: 'Children', price: 'From $25' },
         ],
       },
       {
@@ -34,11 +34,10 @@ export const categories = [
         icon: 'bottle',
         name: 'Hair color',
         description:
-          'Custom color formulation including all-over, balayage, highlights, and gloss treatments.',
+          'Custom color formulation including all-over, highlights, and gloss treatments.',
         options: [
           { name: 'Single process', price: 'From $120' },
-          { name: 'Highlights', price: 'From $180' },
-          { name: 'Balayage', price: 'From $240' },
+          { name: 'Highlights', price: 'From $120' },
           { name: 'Color correction', price: 'Quoted at consult' },
         ],
       },
@@ -50,9 +49,9 @@ export const categories = [
           'Strengthening, smoothing, and reparative therapies — perm, straightening, Olaplex, blow dry.',
         options: [
           { name: 'Olaplex bond therapy', price: 'From $80' },
-          { name: 'Keratin smoothing', price: 'From $280' },
-          { name: 'Soft wave perm', price: 'From $180' },
-          { name: 'Blow dry & style', price: 'From $55' },
+          { name: 'Keratin smoothing', price: 'From $90' },
+          { name: 'Soft wave perm', price: 'From $150' },
+          { name: 'Blow dry & style', price: 'From $35' },
         ],
       },
     ],
@@ -151,9 +150,9 @@ export const categories = [
         description:
           'Premium synthetic mink fibers, custom-mapped per eye shape. Aftercare kit included.',
         options: [
-          { name: 'Classic full set', price: 'From $160' },
-          { name: 'Hybrid full set', price: 'From $200' },
-          { name: 'Volume full set', price: 'From $240' },
+          { name: 'Classic full set', price: 'From $100' },
+          { name: 'Hybrid full set', price: 'From $120' },
+          { name: 'Volume full set', price: 'From $140' },
           { name: 'Refill (2–3 wks)', price: 'From $80' },
         ],
       },
