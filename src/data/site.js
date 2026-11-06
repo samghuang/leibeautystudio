@@ -28,17 +28,11 @@ export const site = {
   email: 'hello@leibeautystudio.com',
 
   address: {
-    street: '1402 N Palm Springs Blvd',
+    street: '46805 Warm Springs Blvd',
     locality: 'Fremont',
     region: 'CA',
     postalCode: '94539',
     country: 'US',
-    note: 'Located inside Atelier on N Beauty',
-  },
-
-  geo: {
-    latitude: 37.5485,
-    longitude: -121.9886,
   },
 
   /**
@@ -50,12 +44,6 @@ export const site = {
     { days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'], label: 'Tue – Fri', hours: '10 – 7', opens: '10:00', closes: '19:00' },
     { days: ['Saturday'], label: 'Saturday', hours: '9 – 6', opens: '09:00', closes: '18:00' },
     { days: ['Sunday', 'Monday'], label: 'Sun, Mon', hours: 'Closed', opens: null, closes: null },
-  ],
-
-  social: [
-    { name: 'Instagram', url: 'https://www.instagram.com/' },
-    { name: 'TikTok', url: 'https://www.tiktok.com/' },
-    { name: 'Yelp', url: 'https://www.yelp.com/' },
   ],
 
   /**

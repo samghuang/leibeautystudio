@@ -129,11 +129,9 @@ headline text → `#b07a58` (3.07). Each is a token edit in
 
 ### Content to verify
 
-- **Address.** `1402 N Palm Springs Blvd, Fremont, CA 94539` with the note
-  "Located inside Atelier on N Beauty" came from the prototype and reads like
-  placeholder copy. It now feeds the structured data, where a wrong address
-  actively hurts local search.
-- **Coordinates.** `site.geo` is approximate for Fremont, not surveyed.
+- **Coordinates.** The structured data carries no `geo` block: the prototype's
+  coordinates were an approximation for Fremont and no longer matched the
+  address. Add surveyed coordinates for 46805 Warm Springs Blvd if wanted.
 - **Home page story copy.** The original paragraph was garbled mid-sentence
   ("to service day class skin with high quality products and technology, to
   never cut pains. Esther has provided to leave on personalized…"). It was
@@ -141,7 +139,6 @@ headline text → `#b07a58` (3.07). Each is a token edit in
   worth a read-through by someone who knows the intended wording.
 - **Timeline vs. headline.** The 2026 timeline entry says "twenty-one years"
   while the rest of the site says twenty.
-- **Social links** point at the bare platform domains, not real profiles.
 
 ### Images
 
