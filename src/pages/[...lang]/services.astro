@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import Icon from '../../components/Icon.astro';
+import { categories } from '../../data/services.js';
+import { bookingHref } from '../../data/site.js';
+import { langPaths, pick, t, ui, formatPrice } from '../../i18n/index.js';
+
+export const getStaticPaths = langPaths;
+
+const { lang } = Astro.props;
+
+const copy = pick(
+  {
+    title: { en: 'Services & Pricing', zh: '服务与价格' },
+    description: {
+      en: 'Full service menu and starting prices for hair cuts, color, treatments, facials, skin and body work, makeup and lash extensions at Lei Beauty Studio in Fremont, CA.',
+      zh: '加州弗里蒙特 Lei Beauty Studio 的完整服务项目与起价：剪发、染发、头发护理、面部护理、皮肤与身体护理、化妆及嫁接睫毛。',
+    },
+    eyebrow: { en: 'The full menu', zh: '完整服务项目' },
+    heading: { en: 'Services <em>&amp; pricing</em>', zh: '服务<em>与价格</em>' },
+    intro: {
+      en: 'Every treatment begins with a short consultation so we can tailor our approach to your hair, skin, and goals. Pricing reflects starting rates — final pricing is confirmed at consult.',
+      zh: '每项护理开始前都会先进行简短咨询，以便根据您的头发、皮肤和需求量身调整方案。所列为起价，最终价格以咨询时确认为准。',
+    },
+    categoriesLabel: { en: 'Service categories', zh: '服务类别' },
+    pricing: { en: 'Pricing', zh: '价格' },
+    ctaTitle: {
+      en: "Not sure what you need?<br />We'll help you choose.",
+      zh: '不确定适合哪项服务？<br />我们帮您挑选。',
+    },
+    ctaAction: { en: 'Book a free consultation', zh: '预约免费咨询' },
+  },
+  lang,
+);
+---
+
+<BaseLayout lang={lang} title={copy.title} description={copy.description}>
+  <div class="container">
+    <header class="svc-hero">
+      <div class="svc-hero-title">
+        <p class="section-eyebrow">{copy.eyebrow}</p>
+        <h1 set:html={copy.heading} />
+      </div>
+      <div class="svc-hero-meta">
+        <p>{copy.intro}</p>
+        <a class="btn btn-primary" href={bookingHref}>{t(ui.book, lang)}</a>
+      </div>
+    </header>
+
+    <nav class="svc-quick-nav" aria-label={copy.categoriesLabel} data-service-quick-nav>
+      <div class="svc-quick-nav-track">
+        {
+          categories.map((category) => (
+            <a href={`#${category.id}`} data-service-quick-link={category.id}>
+              {t(category.title, lang)}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
+    {
+      categories.map((category) => (
+        <section id={category.id} class="svc-cat" aria-labelledby={`${category.id}-title`}>
+          <div class="svc-cat-head">
+            <h2 class="svc-cat-title" id={`${category.id}-title`}>
+              {t(category.title, lang)}
+            </h2>
+            <p class="svc-cat-desc">{t(category.description, lang)}</p>
+          </div>
+
+          {category.items.map((item) => (
+            <article class="svc-row">
+              <div class="svc-row-icon-wrap">
+                <Icon name={item.icon} class="svc-row-icon" />
+              </div>
+
+              <div class="svc-row-body">
+                <h3 class="svc-row-title">{t(item.name, lang)}</h3>
+                <p class="svc-row-desc">{t(item.description, lang)}</p>
+              </div>
+
+              {/*
+                A definition list, not a table: each option is a term and its
+                price is the description, which is what a screen reader needs
+                to read the pair together.
+              */}
+              <div class="svc-row-options">
+                <p class="svc-row-options-eyebrow" id={`${item.id}-pricing`}>{copy.pricing}</p>
+                <dl aria-labelledby={`${item.id}-pricing`}>
+                {item.options.map((option) => (
+                  <div class="svc-row-option">
+                    {/*
+                      A <dl> may only contain dt/dd (optionally wrapped in a
+                      div), so the dotted leader is drawn as a pseudo-element
+                      on the term rather than as a third element between them.
+                    */}
+                    <dt class="svc-row-option-name">
+                      <span>{t(option.name, lang)}</span>
+                    </dt>
+                    <dd class="svc-row-option-price">{formatPrice(option.price, lang)}</dd>
+                  </div>
+                ))}
+                </dl>
+                {'note' in item && <p class="svc-row-note">{t(item.note, lang)}</p>}
+              </div>
+
+            </article>
+          ))}
+        </section>
+      ))
+    }
+  </div>
+
+  <CtaBanner
+    lang={lang}
+    watermark="menu"
+    title={copy.ctaTitle}
+    action={copy.ctaAction}
+    href={bookingHref}
+    style="margin-top: 80px"
+  />
+</BaseLayout>
+
+<script>
+  import { initServiceQuickNav } from '../../scripts/services-nav.js';
+  initServiceQuickNav();
+</script>

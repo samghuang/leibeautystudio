@@ -6,6 +6,13 @@
  */
 import { navLinks } from '../data/nav.js';
 import { site, formattedAddress } from '../data/site.js';
+import { t, ui, localizePath } from '../i18n/index.js';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
 
 const mapsHref = `https://maps.google.com/?q=${encodeURIComponent(
   `${site.name}, ${formattedAddress}`,
@@ -20,7 +27,7 @@ const year = new Date().getFullYear();
         <div class="footer-brand">{site.initials}</div>
 
         <div class="footer-block">
-          <h2 class="footer-h">Address</h2>
+          <h2 class="footer-h">{t(ui.address, lang)}</h2>
           <address class="footer-text" style="font-style: normal">
             <a href={mapsHref} target="_blank" rel="noopener noreferrer">
               {site.address.street}<br />
@@ -30,7 +37,7 @@ const year = new Date().getFullYear();
         </div>
 
         <div class="footer-block">
-          <h2 class="footer-h">Contact</h2>
+          <h2 class="footer-h">{t(ui.contact, lang)}</h2>
           <p class="footer-text">
             <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
           </p>
@@ -38,23 +45,25 @@ const year = new Date().getFullYear();
       </div>
 
       <div>
-        <h2 class="footer-h">Menu</h2>
+        <h2 class="footer-h">{t(ui.menu, lang)}</h2>
         <ul class="footer-list">
-          {navLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+          {navLinks.map((link) => (
+            <li><a href={localizePath(link.href, lang)}>{t(link.label, lang)}</a></li>
+          ))}
         </ul>
       </div>
 
       <div>
-        <h2 class="footer-h">Hours</h2>
+        <h2 class="footer-h">{t(ui.hours, lang)}</h2>
         <ul class="footer-list">
-          {site.hours.map((block) => <li>{block.label} · {block.hours}</li>)}
+          {site.hours.map((block) => <li>{t(block.label, lang)} · {t(block.hours, lang)}</li>)}
         </ul>
       </div>
     </div>
 
     <div class="footer-base">
-      <span>© {year} {site.name}. All rights reserved.</span>
-      <span>Designed with care in the Bay.</span>
+      <span>© {year} {site.name}. {t(ui.rights, lang)}</span>
+      <span>{t(ui.madeIn, lang)}</span>
     </div>
   </div>
 </footer>

@@ -6,8 +6,10 @@
  * markup (the home page puts the phone number in a tel: link).
  */
 import { bookingHref } from '../data/site.js';
+import { t, ui } from '../i18n/index.js';
 
 interface Props {
+  lang: string;
   watermark: string;
   title: string;
   action?: string;
@@ -16,9 +18,10 @@ interface Props {
 }
 
 const {
+  lang,
   watermark,
   title,
-  action = 'Book an appointment',
+  action = t(ui.book, lang),
   href = bookingHref,
   style,
 } = Astro.props;

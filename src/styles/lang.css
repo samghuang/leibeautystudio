@@ -1,0 +1,34 @@
+/*
+ * Adjustments for the Chinese pages (<html lang="zh-Hans">).
+ *
+ * The webfonts carry Latin glyphs only, so each stack gains Chinese faces for
+ * the browser to fall back to character by character: Latin text keeps
+ * Cormorant and Inter, Chinese text gets a matching serif or sans.
+ *
+ * Chinese has no italic: browsers fake one by slanting the glyphs, which
+ * reads as a rendering fault. The design's italic accents keep their colour
+ * and weight but stand upright. `:root:lang(zh) *` outranks every italic rule
+ * in the page stylesheets.
+ */
+
+:root:lang(zh) {
+  --display: 'Cormorant Garamond', 'Songti SC', 'Noto Serif SC', 'Source Han Serif SC', STSong, serif;
+  --sans: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+:root:lang(zh) * {
+  font-style: normal;
+}
+
+/*
+ * Chinese can break between any two characters, so a large heading can strand
+ * a single character on its last line. Balancing evens the lines out.
+ */
+:root:lang(zh) :is(h1, h2) {
+  text-wrap: balance;
+}
+
+/* The highlighted word in a heading is a single term; keep it on one line. */
+:root:lang(zh) :is(h1, h2) em {
+  white-space: nowrap;
+}
