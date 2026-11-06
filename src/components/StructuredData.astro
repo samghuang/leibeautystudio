@@ -40,13 +40,7 @@ const schema = {
     postalCode: site.address.postalCode,
     addressCountry: site.address.country,
   },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: site.geo.latitude,
-    longitude: site.geo.longitude,
-  },
   openingHoursSpecification: openingHours,
-  sameAs: site.social.map((channel) => channel.url),
   founder: {
     '@type': 'Person',
     name: 'Esther Huang',

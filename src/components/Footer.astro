@@ -25,8 +25,7 @@ const year = new Date().getFullYear();
             <a href={mapsHref} target="_blank" rel="noopener noreferrer">
               {site.address.street}<br />
               {site.address.locality}, {site.address.region} {site.address.postalCode}
-            </a><br />
-            <span class="footer-note">{site.address.note}</span>
+            </a>
           </address>
         </div>
 
@@ -49,21 +48,6 @@ const year = new Date().getFullYear();
         <h2 class="footer-h">Hours</h2>
         <ul class="footer-list">
           {site.hours.map((block) => <li>{block.label} · {block.hours}</li>)}
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="footer-h">Follow</h2>
-        <ul class="footer-list">
-          {
-            site.social.map((channel) => (
-              <li>
-                <a href={channel.url} target="_blank" rel="noopener noreferrer">
-                  {channel.name}
-                </a>
-              </li>
-            ))
-          }
         </ul>
       </div>
     </div>
