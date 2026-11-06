@@ -85,6 +85,7 @@ export const ui = {
   contact: { en: 'Contact', zh: '联系方式' },
   menu: { en: 'Menu', zh: '菜单' },
   hours: { en: 'Hours', zh: '营业时间' },
+  appointmentOnly: { en: 'Appointment only, no walk-ins', zh: '仅限预约，恕不接待未预约客人' },
   rights: { en: 'All rights reserved.', zh: '保留所有权利。' },
   madeIn: { en: 'Designed with care in the Bay.', zh: '用心设计于湾区。' },
 };

@@ -127,16 +127,6 @@ export const categories = [
         },
         options: [{ name: perTreatment, price: 'From $155' }],
       },
-    ],
-  },
-  {
-    id: 'skin-body',
-    title: { en: 'Skin & body treatments', zh: '皮肤与身体护理' },
-    description: {
-      en: 'Targeted therapies that complement our facial work.',
-      zh: '与面部护理相辅相成的针对性疗程。',
-    },
-    items: [
       {
         id: 'acne-treatment',
         icon: 'face',
@@ -157,6 +147,16 @@ export const categories = [
         },
         options: [{ name: perTreatment, price: 'From $95' }],
       },
+    ],
+  },
+  {
+    id: 'skin-body',
+    title: { en: 'Skin & body treatments', zh: '皮肤与身体护理' },
+    description: {
+      en: 'Targeted therapies that complement our facial work.',
+      zh: '与面部护理相辅相成的针对性疗程。',
+    },
+    items: [
       {
         id: 'body-treatment',
         icon: 'body',

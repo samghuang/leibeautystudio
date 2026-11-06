@@ -57,6 +57,7 @@ const year = new Date().getFullYear();
         <h2 class="footer-h">{t(ui.hours, lang)}</h2>
         <ul class="footer-list">
           {site.hours.map((block) => <li>{t(block.label, lang)} · {t(block.hours, lang)}</li>)}
+          <li>{t(ui.appointmentOnly, lang)}</li>
         </ul>
       </div>
     </div>
