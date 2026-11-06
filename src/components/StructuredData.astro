@@ -9,6 +9,13 @@
  */
 import { site } from '../data/site.js';
 import { categories } from '../data/services.js';
+import { t } from '../i18n/index.js';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
 
 const openingHours = site.hours
   .filter((block) => block.opens && block.closes)
@@ -25,7 +32,7 @@ const schema = {
   '@id': `${site.url}/#studio`,
   name: site.name,
   legalName: site.legalName,
-  description: site.description,
+  description: t(site.description, lang),
   url: site.url,
   telephone: site.phoneHref,
   email: site.email,
@@ -51,13 +58,13 @@ const schema = {
     name: 'Services',
     itemListElement: categories.map((category) => ({
       '@type': 'OfferCatalog',
-      name: category.title,
+      name: t(category.title, lang),
       itemListElement: category.items.map((item) => ({
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: item.name,
-          description: item.description,
+          name: t(item.name, lang),
+          description: t(item.description, lang),
         },
       })),
     })),

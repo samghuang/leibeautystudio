@@ -26,7 +26,8 @@ export function initNav() {
     nav.classList.toggle('is-open', open);
     sheet.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    // The labels come from the markup so they are in the page's language.
+    toggle.setAttribute('aria-label', open ? toggle.dataset.labelClose : toggle.dataset.labelOpen);
     // `inert` keeps the off-screen sheet out of the tab order and away from
     // screen readers; the CSS transition alone would not.
     sheet.toggleAttribute('inert', !open);

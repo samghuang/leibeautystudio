@@ -5,59 +5,105 @@
  * The active link is marked with `aria-current="page"` — that single attribute
  * drives both the screen-reader announcement and the CSS underline, so there
  * is no separate "active" class to keep in sync.
+ *
+ * The language toggle links to this same page in the other language. It sits
+ * in the link row on desktop and beside the burger on mobile, so switching
+ * never needs the menu sheet.
  */
 import { navLinks, isCurrent } from '../data/nav.js';
 import { site, bookingHref } from '../data/site.js';
+import { languages, t, ui, localizePath, basePath } from '../i18n/index.js';
 
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
 const pathname = Astro.url.pathname;
+
+const links = navLinks.map((link) => {
+  const href = localizePath(link.href, lang);
+  return { label: t(link.label, lang), href, current: isCurrent(href, pathname) };
+});
+
+const otherLang = lang === 'zh' ? 'en' : 'zh';
+const toggle = {
+  href: localizePath(basePath(pathname), otherLang),
+  label: languages[otherLang].toggleLabel,
+  title: languages[otherLang].switchLabel,
+  hreflang: languages[otherLang].htmlLang,
+};
 ---
 
 <div class="nav-wrap">
   <div class="container">
-    <nav class="nav" aria-label="Primary">
-      <a class="brand" href="/">{site.shortName}</a>
+    <nav class="nav" aria-label={t(ui.primaryNav, lang)}>
+      <a class="brand" href={localizePath('/', lang)}>{site.shortName}</a>
 
       <div class="nav-links">
         {
-          navLinks.map((link) => (
-            <a
-              class="nav-link"
-              href={link.href}
-              aria-current={isCurrent(link.href, pathname) ? 'page' : undefined}
-            >
+          links.map((link) => (
+            <a class="nav-link" href={link.href} aria-current={link.current ? 'page' : undefined}>
               {link.label}
             </a>
           ))
         }
+        <a
+          class="nav-lang"
+          href={toggle.href}
+          hreflang={toggle.hreflang}
+          lang={toggle.hreflang}
+          aria-label={toggle.title}
+        >
+          {toggle.label}
+        </a>
         <a class="btn btn-primary" style="margin-left: 8px" href={bookingHref}>
-          Book an appointment
+          {t(ui.book, lang)}
         </a>
       </div>
 
-      <button
-        class="nav-burger"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="nav-sheet"
-        data-nav-toggle
-      >
-        <span></span><span></span><span></span>
-      </button>
+      <div class="nav-mobile-actions">
+        <a
+          class="nav-lang"
+          href={toggle.href}
+          hreflang={toggle.hreflang}
+          lang={toggle.hreflang}
+          aria-label={toggle.title}
+        >
+          {toggle.label}
+        </a>
+        <button
+          class="nav-burger"
+          type="button"
+          aria-label={t(ui.openMenu, lang)}
+          aria-expanded="false"
+          aria-controls="nav-sheet"
+          data-nav-toggle
+          data-label-open={t(ui.openMenu, lang)}
+          data-label-close={t(ui.closeMenu, lang)}
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
 
       <div class="nav-sheet" id="nav-sheet" data-nav-sheet inert>
         <div class="nav-sheet-inner">
-          <button class="nav-sheet-close" type="button" aria-label="Close menu" data-nav-close>
+          <button
+            class="nav-sheet-close"
+            type="button"
+            aria-label={t(ui.closeMenu, lang)}
+            data-nav-close
+          >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
           <div class="nav-sheet-links">
             {
-              navLinks.map((link) => (
+              links.map((link) => (
                 <a
                   class="nav-sheet-link"
                   href={link.href}
-                  aria-current={isCurrent(link.href, pathname) ? 'page' : undefined}
+                  aria-current={link.current ? 'page' : undefined}
                 >
                   {link.label}
                 </a>
@@ -65,7 +111,7 @@ const pathname = Astro.url.pathname;
             }
           </div>
           <a class="btn btn-primary nav-sheet-cta" href={bookingHref}>
-            Book an appointment
+            {t(ui.book, lang)}
           </a>
         </div>
       </div>
@@ -84,7 +130,7 @@ const pathname = Astro.url.pathname;
         justify-content: flex-end;
       }
 
-      .nav-burger {
+      .nav-mobile-actions {
         display: none !important;
       }
     }

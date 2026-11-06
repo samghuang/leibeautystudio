@@ -64,6 +64,18 @@ cards were a second hand-maintained copy of the menu that had already drifted
 from the real prices. Now the home cards reference menu items by `id` and the
 build fails if one goes missing.
 
+### English and Chinese
+
+The site is published in English at the root and in Simplified Chinese under
+`/zh/`. Each page is a single file in `src/pages/[...lang]/` that Astro renders
+once per language, and the header toggle links every page to its counterpart.
+Copy is written as `{ en, zh }` pairs next to each other in the data files and
+pages, read through `t()` in `src/i18n/index.js`; a pair missing a language
+fails the build. Prices, the phone number and the address are written once
+and shared. Chinese has no italic and the webfonts have no Chinese glyphs, so
+`src/styles/lang.css` adds Chinese fallback fonts and stands the italic
+accents upright.
+
 ### Self-hosted fonts
 
 The original inlined 41 woff2 files for six families as base64. Four of those
@@ -139,6 +151,8 @@ headline text → `#b07a58` (3.07). Each is a token edit in
   worth a read-through by someone who knows the intended wording.
 - **Timeline vs. headline.** The 2026 timeline entry says "twenty-one years"
   while the rest of the site says twenty.
+- **Chinese translation.** The Chinese copy was translated from the English
+  and has not yet been read by a native speaker from the studio.
 
 ### Images
 

@@ -1,12 +1,13 @@
 /**
  * Primary navigation. Real URLs, not client-side route keys — each entry is a
  * page that exists on disk under src/pages and is served as its own HTML
- * document.
+ * document. Hrefs are in the default language; `localizePath()` adds the
+ * language prefix.
  */
 export const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services/' },
-  { label: 'About', href: '/about/' },
+  { label: { en: 'Home', zh: '首页' }, href: '/' },
+  { label: { en: 'Services', zh: '服务' }, href: '/services/' },
+  { label: { en: 'About', zh: '关于我们' }, href: '/about/' },
 ];
 
 /**

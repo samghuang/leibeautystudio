@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import Photo from '../../components/Photo.astro';
+import { story, values, founder, timeline } from '../../data/about.js';
+import { bookingHref } from '../../data/site.js';
+import { langPaths, pick, t, ui, localizePath } from '../../i18n/index.js';
+
+export const getStaticPaths = langPaths;
+
+const { lang } = Astro.props;
+
+const copy = pick(
+  {
+    title: { en: 'About the Studio', zh: '关于工作室' },
+    description: {
+      en: 'Lei Beauty Studio is a one-chair, family-run studio in Fremont, CA. Founder Esther Huang has practised for twenty years and still treats every client personally.',
+      zh: 'Lei Beauty Studio 是位于加州弗里蒙特、由家庭经营的单人工作室。创始人 Esther Huang 从业二十年，至今仍亲自为每位客人服务。',
+    },
+    eyebrow: { en: 'About the studio', zh: '关于工作室' },
+    heading: { en: 'Twenty years of <em>quiet</em> craft.', zh: '二十年<em>静心</em>匠艺。' },
+    lede: {
+      en: 'LEI Beauty Studio is a small, family-run beauty studio in Fremont built on patient, personalized work. We are licensed, professionally trained, and proudly old-fashioned about how long we spend with every client.',
+      zh: 'LEI Beauty Studio 是弗里蒙特一家由家庭经营的小型美容工作室，以耐心、个性化的服务为本。我们持有执照、受过专业训练，并且坚持“老派”作风——愿意为每位客人花足时间。',
+    },
+    seeServices: { en: 'See services', zh: '查看服务' },
+    ourStory: { en: 'Our story', zh: '我们的故事' },
+    believe: { en: 'What we believe', zh: '我们的信念' },
+    behindChair: { en: 'Behind the chair', zh: '主理人' },
+    meet: { en: 'Meet <em>Esther</em>.', zh: '认识 <em>Esther</em>。' },
+    bookWithEsther: { en: 'Book with Esther', zh: '预约 Esther' },
+    soFar: { en: 'The story so far', zh: '一路走来' },
+    yearByYear: { en: 'The studio, year by year', zh: '工作室历程' },
+    ctaTitle: {
+      en: 'Come meet us in person.<br />The kettle is always on.',
+      zh: '欢迎亲临工作室。<br />热茶随时为您备好。',
+    },
+  },
+  lang,
+);
+---
+
+<BaseLayout lang={lang} title={copy.title} description={copy.description}>
+  <div class="container">
+    {/* ── Hero ────────────────────────────────────────────── */}
+    <section class="about-hero">
+      <div>
+        <p class="section-eyebrow section-eyebrow--lg">{copy.eyebrow}</p>
+        <h1 set:html={copy.heading} />
+        <p class="about-hero-lede">{copy.lede}</p>
+        <div class="about-hero-actions">
+          <a class="btn btn-primary" href={bookingHref}>{t(ui.book, lang)}</a>
+          <a class="btn btn-ghost" href={localizePath('/services/', lang)}>{copy.seeServices}</a>
+        </div>
+      </div>
+      <div class="media-portrait">
+        <Photo label="studio · interior, treatment room" />
+      </div>
+    </section>
+
+    {/* ── Story ───────────────────────────────────────────── */}
+    <section class="about-story" aria-labelledby="story-heading">
+      <h2 class="about-story-h" id="story-heading">{copy.ourStory}</h2>
+      <div>
+        <blockquote class="about-story-quote">{t(story.pullQuote, lang)}</blockquote>
+        {story.paragraphs.map((paragraph) => <p class="about-story-body" set:html={t(paragraph, lang)} />)}
+      </div>
+    </section>
+
+    {/* ── Values ──────────────────────────────────────────── */}
+    <section class="section" style="padding-top: 0; border-top: 1px solid var(--line)">
+      <div class="section-head" style="margin-top: 64px">
+        <h2 class="section-title">{copy.believe}</h2>
+      </div>
+      <ul class="values">
+        {
+          values.map((value) => (
+            <li class="value">
+              <p class="value-num">{value.number}</p>
+              <h3 class="value-h">{t(value.heading, lang)}</h3>
+              <p class="value-b">{t(value.body, lang)}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {/* ── Founder ─────────────────────────────────────────── */}
+    <section class="founder" aria-labelledby="founder-heading">
+      <div class="founder-media media-portrait">
+        <Photo label="esther · founder portrait" />
+      </div>
+      <div class="founder-body">
+        <p class="section-eyebrow section-eyebrow--lg">{copy.behindChair}</p>
+        <h2 class="founder-h" id="founder-heading" set:html={copy.meet} />
+        <p class="founder-lede">{t(founder.lede, lang)}</p>
+
+        <dl class="founder-creds">
+          {
+            founder.credentials.map((credential) => (
+              <>
+                <dt>{t(credential.term, lang)}</dt>
+                <dd>{t(credential.detail, lang)}</dd>
+              </>
+            ))
+          }
+        </dl>
+
+        <a class="btn btn-primary" style="margin-top: 28px" href={bookingHref}>
+          {copy.bookWithEsther}
+        </a>
+      </div>
+    </section>
+
+    {/* ── Timeline ────────────────────────────────────────── */}
+    <section class="timeline" aria-labelledby="timeline-heading">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">{copy.soFar}</p>
+          <h2 class="section-title" id="timeline-heading">{copy.yearByYear}</h2>
+        </div>
+      </div>
+      <ol class="timeline-track">
+        {
+          timeline.map((entry) => (
+            <li class="tl-item">
+              <p class="tl-year">{entry.year}</p>
+              <h3 class="tl-title">{t(entry.title, lang)}</h3>
+              <p class="tl-body">{t(entry.body, lang)}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
+
+  <CtaBanner
+    lang={lang}
+    watermark="welcome"
+    title={copy.ctaTitle}
+    style="margin-top: 40px"
+  />
+</BaseLayout>

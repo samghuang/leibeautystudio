@@ -190,6 +190,14 @@
   margin-bottom: 0;
 }
 
+/* A line under the price list, e.g. package pricing. */
+.svc-row-note {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 14px 0 0;
+}
+
 /* The option/price pair is a <dt>/<dd>; strip the list defaults. */
 .svc-row-option dt,
 .svc-row-option dd {

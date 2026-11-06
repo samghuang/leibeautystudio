@@ -1,17 +1,54 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import CtaBanner from '../components/CtaBanner.astro';
-import Icon from '../components/Icon.astro';
-import Photo from '../components/Photo.astro';
-import { featuredServices } from '../data/services.js';
-import { testimonials } from '../data/testimonials.js';
-import { storyPreview } from '../data/about.js';
-import { site, bookingHref } from '../data/site.js';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import { featuredServices } from '../../data/services.js';
+import { testimonials } from '../../data/testimonials.js';
+import { storyPreview } from '../../data/about.js';
+import { site, bookingHref } from '../../data/site.js';
+import { langPaths, pick, t, localizePath } from '../../i18n/index.js';
 
-const description = `${site.description} Hair, facials, lashes and makeup by appointment — call ${site.phone}.`;
+export const getStaticPaths = langPaths;
+
+const { lang } = Astro.props;
+
+const copy = pick(
+  {
+    title: { en: 'Hair, Facials & Lashes in Fremont', zh: '弗里蒙特美发、面部护理与美睫' },
+    description: {
+      en: `${site.description.en} Hair, facials, lashes and makeup by appointment — call ${site.phone}.`,
+      zh: `${site.description.zh}美发、面部护理、美睫与化妆均需预约，请致电 ${site.phone}。`,
+    },
+    est: { en: 'Est.', zh: '创立于' },
+    heading: {
+      en: 'Quality treatment that <em>enhances</em> your natural beauty.',
+      zh: '用心护理，<em>焕发</em>您的自然之美。',
+    },
+    sub: {
+      en: 'LEI Beauty Studio aims to provide quality treatments and help clients enhance their natural beauty — without ever altering who they are.',
+      zh: 'LEI Beauty Studio 致力于提供优质护理，帮助客人焕发自然之美——而不改变您本来的样子。',
+    },
+    bookNow: { en: 'Book now', zh: '立即预约' },
+    allServices: { en: 'All services', zh: '全部服务' },
+    ourServices: { en: 'Our services', zh: '我们的服务' },
+    aboutEyebrow: { en: 'Enhancing your natural beauty', zh: '焕发您的自然之美' },
+    aboutHeading: { en: `About ${site.name}`, zh: `关于 ${site.name}` },
+    aboutUs: { en: 'About us', zh: '关于我们' },
+    testimonials: { en: 'Some kind words from clients', zh: '客人的真心评价' },
+    previous: { en: 'Previous testimonials', zh: '上一组评价' },
+    next: { en: 'Next testimonials', zh: '下一组评价' },
+    ctaTitle: {
+      en: `Call us for an appointment<br />at <a href="tel:${site.phoneHref}">${site.phone}</a>`,
+      zh: `欢迎致电预约<br /><a href="tel:${site.phoneHref}">${site.phone}</a>`,
+    },
+  },
+  lang,
+);
+const servicesHref = localizePath('/services/', lang);
 ---
 
-<BaseLayout title="Hair, Facials & Lashes in Fremont" description={description}>
+<BaseLayout lang={lang} title={copy.title} description={copy.description}>
   <div class="container">
     {/* ── Hero ────────────────────────────────────────────── */}
     <section class="hero">
@@ -24,18 +61,13 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
         <p class="hero-eyebrow">
           <span>{site.name}</span>
           <span class="hero-eyebrow-sep" aria-hidden="true">·</span>
-          <span>Est. {site.founded}</span>
+          <span>{copy.est} {site.founded}</span>
         </p>
-        <h1 class="hero-title">
-          Quality treatment that <em>enhances</em> your natural beauty.
-        </h1>
-        <p class="hero-sub">
-          LEI Beauty Studio aims to provide quality treatments and help clients
-          enhance their natural beauty — without ever altering who they are.
-        </p>
+        <h1 class="hero-title" set:html={copy.heading} />
+        <p class="hero-sub">{copy.sub}</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href={bookingHref}>Book now</a>
-          <a class="btn btn-ghost" href="/services/">All services</a>
+          <a class="btn btn-primary" href={bookingHref}>{copy.bookNow}</a>
+          <a class="btn btn-ghost" href={servicesHref}>{copy.allServices}</a>
         </div>
       </div>
       <div class="media-fill">
@@ -46,17 +78,17 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
     {/* ── Services ────────────────────────────────────────── */}
     <section class="section">
       <div class="section-head services-section-head">
-        <h2 class="section-title">Our services</h2>
-        <a class="btn btn-ghost" href="/services/">All services</a>
+        <h2 class="section-title">{copy.ourServices}</h2>
+        <a class="btn btn-ghost" href={servicesHref}>{copy.allServices}</a>
       </div>
 
       <div class="svc-grid">
         {
           featuredServices.map((service) => (
-            <a class="svc-cell" href={service.href}>
+            <a class="svc-cell" href={localizePath(service.href, lang)}>
               <Icon name={service.icon} class="svc-cell-icon" />
-              <h3 class="svc-cell-name">{service.name}</h3>
-              <p class="svc-cell-tags">{service.teaser}</p>
+              <h3 class="svc-cell-name">{t(service.name, lang)}</h3>
+              <p class="svc-cell-tags">{t(service.teaser, lang)}</p>
               <Icon name="arrow" class="svc-cell-arrow" />
             </a>
           ))
@@ -68,11 +100,11 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
     {/* ── About preview ───────────────────────────────────── */}
     <section class="section">
       <div class="about-preview">
-        <p class="about-preview-eyebrow">Enhancing your natural beauty</p>
+        <p class="about-preview-eyebrow">{copy.aboutEyebrow}</p>
         <div class="about-preview-copy">
-          <h2 class="about-preview-title">About {site.name}</h2>
-          {storyPreview.map((paragraph) => <p class="about-preview-body">{paragraph}</p>)}
-          <a class="btn btn-primary" href="/about/">About us</a>
+          <h2 class="about-preview-title">{copy.aboutHeading}</h2>
+          {storyPreview.map((paragraph) => <p class="about-preview-body">{t(paragraph, lang)}</p>)}
+          <a class="btn btn-primary" href={localizePath('/about/', lang)}>{copy.aboutUs}</a>
         </div>
         <div class="about-preview-media media-fill">
           <Photo label="founder · esther huang portrait" />
@@ -88,7 +120,7 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
             <p class="stat-num">
               {stat.value}<span class="stat-suffix">{stat.suffix}</span>
             </p>
-            <p class="stat-label">{stat.label}</p>
+            <p class="stat-label">{t(stat.label, lang)}</p>
           </li>
         ))
       }
@@ -97,9 +129,7 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
     {/* ── Testimonials ────────────────────────────────────── */}
     <section class="section" style="padding-top: 24px">
       <div class="section-head">
-        <h2 class="section-title" id="testimonials-heading">
-          Some kind words from clients
-        </h2>
+        <h2 class="section-title" id="testimonials-heading">{copy.testimonials}</h2>
       </div>
 
       {/*
@@ -117,7 +147,7 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
           class="t-arrow t-arrow-left"
           type="button"
           data-carousel-step="-1"
-          aria-label="Previous testimonials"
+          aria-label={copy.previous}
           aria-controls="testimonials-track"
         >
           <Icon name="arrow" style="width: 18px; height: 18px; transform: rotate(180deg)" />
@@ -135,13 +165,13 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
                 <span class="tcard-glyph" aria-hidden="true">“</span>
                 <figure style="margin: 0; display: flex; flex-direction: column; flex: 1">
                   <blockquote class="tcard-quote" style="margin: 0 0 20px">
-                    {testimonial.quote}
+                    {t(testimonial.quote, lang)}
                   </blockquote>
                   <figcaption class="tcard-foot">
                     <span class="tcard-author">— {testimonial.author}</span>
                     <span class="tcard-meta">
                       <Icon name={testimonial.icon} />
-                      <span>{testimonial.service}</span>
+                      <span>{t(testimonial.service, lang)}</span>
                     </span>
                   </figcaption>
                 </figure>
@@ -154,7 +184,7 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
           class="t-arrow t-arrow-right"
           type="button"
           data-carousel-step="1"
-          aria-label="Next testimonials"
+          aria-label={copy.next}
           aria-controls="testimonials-track"
         >
           <Icon name="arrow" style="width: 18px; height: 18px" />
@@ -165,7 +195,7 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
             class="t-nav"
             type="button"
             data-carousel-step="-1"
-            aria-label="Previous testimonials"
+            aria-label={copy.previous}
             aria-controls="testimonials-track"
           >
             <Icon name="arrow" style="width: 16px; height: 16px; transform: rotate(180deg)" />
@@ -174,7 +204,7 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
             class="t-nav"
             type="button"
             data-carousel-step="1"
-            aria-label="Next testimonials"
+            aria-label={copy.next}
             aria-controls="testimonials-track"
           >
             <Icon name="arrow" style="width: 16px; height: 16px" />
@@ -184,13 +214,10 @@ const description = `${site.description} Hair, facials, lashes and makeup by app
     </section>
   </div>
 
-  <CtaBanner
-    watermark={site.shortName}
-    title={`Call us for an appointment<br />at <a href="tel:${site.phoneHref}">${site.phone}</a>`}
-  />
+  <CtaBanner lang={lang} watermark={site.shortName} title={copy.ctaTitle} />
 </BaseLayout>
 
 <script>
-  import { initCarousel } from '../scripts/carousel.js';
+  import { initCarousel } from '../../scripts/carousel.js';
   initCarousel();
 </script>

@@ -19,8 +19,10 @@ export const site = {
   url: 'https://leibeautystudio.com',
 
   tagline: 'Quality treatment that enhances your natural beauty.',
-  description:
-    'Lei Beauty Studio is a family-run hair, facial and lash studio in Fremont, CA. Twenty years of patient, personalized treatment from founder Esther Huang.',
+  description: {
+    en: 'Lei Beauty Studio is a family-run hair, facial and lash studio in Fremont, CA. Twenty years of patient, personalized treatment from founder Esther Huang.',
+    zh: 'Lei Beauty Studio 是位于加州弗里蒙特的家庭经营美发、面部护理与美睫工作室。创始人 Esther Huang 二十年来始终用心为每位客人提供细致、个性化的护理。',
+  },
 
   phone: '(510) 688 6648',
   // E.164 form, used for tel: links and structured data.
@@ -37,13 +39,31 @@ export const site = {
 
   /**
    * `opens`/`closes` are 24h times for structured data; `label` is what a
-   * human reads in the footer. Keeping both together stops the two from
-   * drifting apart.
+   * human reads in the footer, in each language. Keeping both together stops
+   * the two from drifting apart.
    */
   hours: [
-    { days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'], label: 'Tue – Fri', hours: '10 – 7', opens: '10:00', closes: '19:00' },
-    { days: ['Saturday'], label: 'Saturday', hours: '9 – 6', opens: '09:00', closes: '18:00' },
-    { days: ['Sunday', 'Monday'], label: 'Sun, Mon', hours: 'Closed', opens: null, closes: null },
+    {
+      days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      label: { en: 'Tue – Fri', zh: '周二至周五' },
+      hours: { en: '10 – 7', zh: '10:00 – 19:00' },
+      opens: '10:00',
+      closes: '19:00',
+    },
+    {
+      days: ['Saturday'],
+      label: { en: 'Saturday', zh: '周六' },
+      hours: { en: '9 – 6', zh: '9:00 – 18:00' },
+      opens: '09:00',
+      closes: '18:00',
+    },
+    {
+      days: ['Sunday', 'Monday'],
+      label: { en: 'Sun, Mon', zh: '周日、周一' },
+      hours: { en: 'Closed', zh: '休息' },
+      opens: null,
+      closes: null,
+    },
   ],
 
   /**
@@ -53,9 +73,9 @@ export const site = {
   bookingUrl: null,
 
   stats: [
-    { value: '20', suffix: '+', label: 'Years of experience' },
-    { value: '1,000', suffix: '+', label: 'Satisfied clients' },
-    { value: '10', suffix: '+', label: 'Years as a beauty educator' },
+    { value: '20', suffix: '+', label: { en: 'Years of experience', zh: '年从业经验' } },
+    { value: '1,000', suffix: '+', label: { en: 'Satisfied clients', zh: '位满意客人' } },
+    { value: '10', suffix: '+', label: { en: 'Years as a beauty educator', zh: '年美容教学经验' } },
   ],
 };
 
