@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CtaBanner from '../../components/CtaBanner.astro';
 import Photo from '../../components/Photo.astro';
 import { story, values, founder, timeline } from '../../data/about.js';
+import { photos } from '../../data/photos.js';
 import { bookingHref } from '../../data/site.js';
 import { langPaths, pick, t, ui, localizePath } from '../../i18n/index.js';
 
@@ -54,7 +55,7 @@ const copy = pick(
         </div>
       </div>
       <div class="media-portrait">
-        <Photo label="studio · interior, treatment room" />
+        <Photo photo={photos.aboutHero} lang={lang} eager />
       </div>
     </section>
 
@@ -88,7 +89,7 @@ const copy = pick(
     {/* ── Founder ─────────────────────────────────────────── */}
     <section class="founder" aria-labelledby="founder-heading">
       <div class="founder-media media-portrait">
-        <Photo label="esther · founder portrait" />
+        <Photo photo={photos.aboutFounder} lang={lang} />
       </div>
       <div class="founder-body">
         <p class="section-eyebrow section-eyebrow--lg">{copy.behindChair}</p>

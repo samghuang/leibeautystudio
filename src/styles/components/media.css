@@ -1,12 +1,27 @@
 /*
  * Image slots.
  *
- * The site currently has no photography, so every image well renders a
- * labelled placeholder. Replacing `<Photo>` with Astro's `<Image>` is the only
- * change needed once real assets exist — the surrounding layout already
- * reserves the right aspect ratio, so dropping photos in will not shift the
- * page.
+ * Each well reserves its aspect ratio, and `<Photo>` fills it with either a
+ * photograph or a labelled placeholder (see src/components/Photo.astro).
  */
+
+.photo-img,
+.photo-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.photo-img img {
+  object-fit: cover;
+  object-position: var(--photo-position);
+}
+
+@media (min-width: 721px) {
+  .photo-img img {
+    object-position: var(--photo-position-wide);
+  }
+}
 
 .photo {
   width: 100%;

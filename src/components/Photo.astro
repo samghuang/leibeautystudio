@@ -1,21 +1,64 @@
 ---
 /**
- * Placeholder for photography that has not been shot yet.
+ * A photograph filling its image well, or a labelled placeholder for one that
+ * has not been shot yet.
  *
- * Each instance names the picture it is standing in for, so the shot list is
- * readable straight off the page. When real images arrive, swap the inner
- * markup for Astro's `<Image />` — the wrapper classes already reserve the
- * correct aspect ratio, so no layout shift is introduced.
+ * Pass `photo` (an entry from src/data/photos.js) to render the image; without
+ * it the slot shows `label`, naming the picture it is standing in for, so the
+ * shot list is readable straight off the page. The wrapper classes reserve
+ * the slot's aspect ratio either way, so swapping one for the other never
+ * shifts the layout.
  */
+import { t } from '../i18n/index.js';
+
+interface PhotoData {
+  src: string;
+  width: number;
+  height: number;
+  alt: { en: string; zh: string };
+  /** Focal point for `object-position`, e.g. '50% 30%'. */
+  position?: string;
+  /** A landscape crop used above the mobile breakpoint, for wide slots. */
+  wide?: { src: string; width: number; height: number; position?: string };
+}
 
 interface Props {
   /** Describes the intended photograph, e.g. "hero · facial in progress". */
-  label: string;
+  label?: string;
+  photo?: PhotoData;
+  lang?: string;
+  /** Above-the-fold images load immediately; the rest wait until scrolled to. */
+  eager?: boolean;
 }
 
-const { label } = Astro.props;
+const { label = '', photo, lang = 'en', eager = false } = Astro.props;
 ---
 
-<div class="photo" role="img" aria-label={`Placeholder for photograph: ${label}`}>
-  <span>{label}</span>
-</div>
+{
+  photo ? (
+    <picture class="photo-img">
+      {photo.wide && (
+        <source
+          media="(min-width: 721px)"
+          srcset={photo.wide.src}
+          width={photo.wide.width}
+          height={photo.wide.height}
+        />
+      )}
+      <img
+        src={photo.src}
+        width={photo.width}
+        height={photo.height}
+        alt={t(photo.alt, lang)}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : undefined}
+        decoding="async"
+        style={`--photo-position: ${photo.position ?? '50% 50%'}; --photo-position-wide: ${photo.wide?.position ?? photo.position ?? '50% 50%'}`}
+      />
+    </picture>
+  ) : (
+    <div class="photo" role="img" aria-label={`Placeholder for photograph: ${label}`}>
+      <span>{label}</span>
+    </div>
+  )
+}

@@ -6,6 +6,7 @@ import Photo from '../../components/Photo.astro';
 import { featuredServices } from '../../data/services.js';
 import { testimonials } from '../../data/testimonials.js';
 import { storyPreview } from '../../data/about.js';
+import { photos } from '../../data/photos.js';
 import { site, bookingHref } from '../../data/site.js';
 import { langPaths, pick, t, localizePath } from '../../i18n/index.js';
 
@@ -71,7 +72,7 @@ const servicesHref = localizePath('/services/', lang);
         </div>
       </div>
       <div class="media-fill">
-        <Photo label="hero · facial treatment in progress" />
+        <Photo photo={photos.homeHero} lang={lang} eager />
       </div>
     </section>
 
@@ -107,7 +108,7 @@ const servicesHref = localizePath('/services/', lang);
           <a class="btn btn-primary" href={localizePath('/about/', lang)}>{copy.aboutUs}</a>
         </div>
         <div class="about-preview-media media-fill">
-          <Photo label="founder · esther huang portrait" />
+          <Photo photo={photos.homeAbout} lang={lang} />
         </div>
       </div>
     </section>
